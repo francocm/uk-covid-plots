@@ -8,6 +8,8 @@ Daily polling of [UK Government Coronavirus Data](https://coronavirus.data.gov.u
 
 The Grafana dashboard is accessible without authentication, and is readonly.
 
+The way the UK Government Coronavirus Data APIs work, is that they return the full dataset since the beginning of the pandemic. This means that running this application the first time would populate it automatically with the full data-set.
+
 The following containers are started up when using `docker-compose up -d`:
 
 | Name | Image | Depends on | Custom build | Purpose |
@@ -51,7 +53,7 @@ Standard `docker-compose` management commands are used to manage and monitor the
 
 #### Refresh secrets
 
-> **Note**: This works only when it has not been yet provisioned. If it already exists, destroy it, and re-provision freshly. The script should rebuild data from the beginning of time anyway, assuming that the UK Government keeps providing this.
+> **Note**: This works only when it has not yet been provisioned. If it already exists, destroy it, and re-provision freshly. The script should rebuild data from the beginning of time anyway, assuming that the UK Government keeps providing this.
 
 Running this script will automatically generate new secrets and update all the configuration throughout to make sure configuration is properly aligned.
 
