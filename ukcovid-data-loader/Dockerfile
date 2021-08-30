@@ -9,7 +9,7 @@ RUN pip3 install speedtest-cli 'influxdb-client[ciso]' ischedule psutil requests
 
 RUN addgroup -S ukcoviddata && adduser -S ukcoviddata -G ukcoviddata
 
-RUN mkdir /ukcoviddata-loader
+RUN mkdir /ukcoviddata-loader /data && chown -R ukcoviddata:ukcoviddata /data
 WORKDIR /ukcoviddata-loader
 
 COPY loader.py /ukcoviddata-loader

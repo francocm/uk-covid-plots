@@ -1,2 +1,4 @@
-data/*.json
-influx/**
+data/archive/*
+data/influx/*
+!data/archive/.gitkeep
+!data/influx/.gitkeep
