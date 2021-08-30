@@ -7,7 +7,7 @@ datasources:
     url: http://ukcovid-influxdb:8086
     isDefault: true
     secureJsonData:
-      token: 2f2ddf8c8c18fc53a68cea0de9c4
+      token: a5ded429de0424d16ab284301b3f
     jsonData:
       version: Flux
       organization: ukcoviddata

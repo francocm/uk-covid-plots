@@ -27,14 +27,14 @@
       "datasource": null,
       "description": "",
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 24,
         "x": 0,
         "y": 0
       },
       "id": 9,
       "options": {
-        "content": "Data is obtained from the UK Government Official Covid Data sources. Full dataset is polled and refreshed once a day.\n\n* Page: https://coronavirus.data.gov.uk/\n* API URL used: [click here](https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=cumPeopleVaccinatedCompleteByPublishDate&metric=newAdmissions&metric=newCasesBySpecimenDate&metric=newDeaths28DaysByDeathDate&metric=covidOccupiedMVBeds&format=json)\n    * Metrics: `covidOccupiedMVBeds`, `newCasesBySpecimenDate`, `cumPeopleVaccinatedCompleteByPublishDate`, `newDeaths28DaysByDeathDate`, `newAdmissions`",
+        "content": "Data is obtained from the UK Government Official Covid Data sources. Full dataset is polled and refreshed once a day.\n\n* Page: https://coronavirus.data.gov.uk/\n* API URL used: [click here](https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=cumPeopleVaccinatedCompleteByPublishDate&metric=newAdmissions&metric=newCasesBySpecimenDate&metric=newDeaths28DaysByDeathDate&metric=covidOccupiedMVBeds&format=json)\n    * Metrics: `covidOccupiedMVBeds`, `newCasesBySpecimenDate`, `cumPeopleVaccinatedCompleteByPublishDate`, `newDeaths28DaysByDeathDate`, `newAdmissions`\n\nThis dashboard and related source code, available on GitHub: https://github.com/francocm/uk-covid-plots",
         "mode": "markdown"
       },
       "pluginVersion": "8.1.2",
@@ -100,7 +100,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 6
       },
       "id": 2,
       "options": {
@@ -180,7 +180,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 12
+        "y": 13
       },
       "id": 4,
       "options": {
@@ -259,7 +259,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 12
+        "y": 13
       },
       "id": 5,
       "options": {
@@ -339,7 +339,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 19
+        "y": 20
       },
       "id": 6,
       "options": {
@@ -421,7 +421,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 19
+        "y": 20
       },
       "id": 7,
       "options": {
@@ -536,7 +536,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 27
       },
       "id": 11,
       "options": {

@@ -40,7 +40,7 @@ services:
       - ukcovid
     environment:
       - "GF_SERVER_ROOT_URL=http://localhost"
-      - "GF_SECURITY_ADMIN_PASSWORD=42b63d2f52154f8b4bf492cf69"
+      - "GF_SECURITY_ADMIN_PASSWORD=b87deac4cf50f28e66f03c9b2a00"
       - "GF_AUTH_ANONYMOUS_ENABLED=true"
     depends_on:
       ukcovid-influxdb:
