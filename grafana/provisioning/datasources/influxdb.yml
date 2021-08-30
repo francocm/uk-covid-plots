@@ -1,0 +1,15 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB
+    type: influxdb
+    access: proxy
+    url: http://ukcovid-influxdb:8086
+    isDefault: true
+    secureJsonData:
+      token: 2f2ddf8c8c18fc53a68cea0de9c4
+    jsonData:
+      version: Flux
+      organization: ukcoviddata
+      defaultBucket: ukcoviddata-bucket
+      tlsSkipVerify: true

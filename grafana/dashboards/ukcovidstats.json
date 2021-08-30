@@ -1,0 +1,599 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 1,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "description": "",
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "content": "Data is obtained from the UK Government Official Covid Data sources. Full dataset is polled and refreshed once a day.\n\n* Page: https://coronavirus.data.gov.uk/\n* API URL used: [click here](https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=cumPeopleVaccinatedCompleteByPublishDate&metric=newAdmissions&metric=newCasesBySpecimenDate&metric=newDeaths28DaysByDeathDate&metric=covidOccupiedMVBeds&format=json)\n    * Metrics: `covidOccupiedMVBeds`, `newCasesBySpecimenDate`, `cumPeopleVaccinatedCompleteByPublishDate`, `newDeaths28DaysByDeathDate`, `newAdmissions`",
+        "mode": "markdown"
+      },
+      "pluginVersion": "8.1.2",
+      "title": "UK Covid-19 Daily Stats",
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"ukcoviddata-bucket\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> drop(columns: [\"areaType\", \"areaCode\", \"areaName\"])\n|> filter(fn: (r) =>\n    r._measurement == \"uk_covid_day\" and\n    r._field == \"newCasesBySpecimenDate\"\n  )\n|> sort(columns:[\"_time\"], desc: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "New cases by specimen date",
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "max": 5000,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"ukcoviddata-bucket\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> drop(columns: [\"areaType\", \"areaCode\", \"areaName\"])\n|> filter(fn: (r) =>\n    r._measurement == \"uk_covid_day\" and\n    r._field == \"newAdmissions\"\n  )\n|> sort(columns:[\"_time\"], desc: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "Patients Admitted",
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"ukcoviddata-bucket\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> drop(columns: [\"areaType\", \"areaCode\", \"areaName\"])\n|> filter(fn: (r) =>\n    r._measurement == \"uk_covid_day\" and\n    r._field == \"newDeaths28DaysByDeathDate\"\n  )\n|> sort(columns:[\"_time\"], desc: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "Deaths when Covid Positive in last 28 days",
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "max": 5000,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 19
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"ukcoviddata-bucket\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> drop(columns: [\"areaType\", \"areaCode\", \"areaName\"])\n|> filter(fn: (r) =>\n    r._measurement == \"uk_covid_day\" and\n    r._field == \"covidOccupiedMVBeds\"\n  )\n|> sort(columns:[\"_time\"], desc: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "Patients on Ventilator",
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "description": "Full population: 66,650,000",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Full population: 66,650,000",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 66650000,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 66650000
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 19
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "query": "from(bucket: \"ukcoviddata-bucket\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> drop(columns: [\"areaType\", \"areaCode\", \"areaName\"])\n|> filter(fn: (r) =>\n    r._measurement == \"uk_covid_day\" and\n    r._field == \"cumPeopleVaccinatedCompleteByPublishDate\"\n  )\n|> sort(columns:[\"_time\"], desc: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "Cumulative Full Dosage Vaccinations",
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Cumulative Full Dosage Vaccinations"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "New cases by specimen date"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Patients Admitted"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Patients on Ventilator"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Deaths when Covid Positive in last 28 days"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 11,
+      "options": {
+        "showHeader": true
+      },
+      "pluginVersion": "8.1.2",
+      "targets": [
+        {
+          "query": "from(bucket: \"ukcoviddata-bucket\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> drop(columns: [\"areaType\", \"areaCode\", \"areaName\"])\n|> sort(columns:[\"_time\"], desc: true)",
+          "refId": "A"
+        }
+      ],
+      "title": "Raw Data",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "Time": 0,
+              "covidOccupiedMVBeds": 3,
+              "cumPeopleVaccinatedCompleteByPublishDate": 5,
+              "newAdmissions": 2,
+              "newCasesBySpecimenDate": 1,
+              "newDeaths28DaysByDeathDate": 4
+            },
+            "renameByName": {
+              "covidOccupiedMVBeds": "Patients on Ventilator",
+              "cumPeopleVaccinatedCompleteByPublishDate": "Cumulative Full Dosage Vaccinations",
+              "newAdmissions": "Patients Admitted",
+              "newCasesBySpecimenDate": "New cases by specimen date",
+              "newDeaths28DaysByDeathDate": "Deaths when Covid Positive in last 28 days"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "2020-01-01T00:00:00.000Z",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "utc",
+  "title": "UK Covid Stats",
+  "uid": "_u1K1DVnk",
+  "version": 1
+}

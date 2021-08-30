@@ -1,0 +1,50 @@
+version: "3.9"
+services:
+  ukcovid-dataloader:
+    build: ukcovid-data-loader/.
+    restart: unless-stopped
+    networks:
+      - ukcovid
+    env_file:
+      - .env
+    volumes:
+      - ./data:/data
+      - ./ukcovid-data-loader/loader.py:/ukcoviddata-loader/loader.py:ro
+    depends_on:
+      ukcovid-influxdb:
+        condition: service_healthy
+  ukcovid-influxdb:
+    image: influxdb:2.0-alpine
+    restart: unless-stopped
+    volumes:
+      -  ./influx:/var/lib/influxdb2
+    networks:
+      - ukcovid
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "influx", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+  ukcovid-grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks:
+      - ukcovid
+    environment:
+      - "GF_SERVER_ROOT_URL=http://localhost"
+      - "GF_SECURITY_ADMIN_PASSWORD=42b63d2f52154f8b4bf492cf69"
+      - "GF_AUTH_ANONYMOUS_ENABLED=true"
+    depends_on:
+      ukcovid-influxdb:
+        condition: service_healthy
+
+networks:
+  ukcovid:
