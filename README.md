@@ -68,7 +68,11 @@ cd path/to/uk-covid-plots
 
 **Temporary Docker container - compatible with any OS**
 
-TODO
+```bash
+# Works on Windows (Powershell only!), MacOS, and Linux
+
+docker run --rm -v "${PWD}:/tmp/uk-covid-plots" alpine:latest /bin/sh -c "cd /tmp/uk-covid-plots && apk add uuidgen && ./secrets-refresh.sh"
+```
 
 ### Configuration
 
