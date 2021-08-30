@@ -9,7 +9,6 @@ services:
       - .env
     volumes:
       - ./data:/data
-      - ./ukcovid-data-loader/loader.py:/ukcoviddata-loader/loader.py:ro
     depends_on:
       ukcovid-influxdb:
         condition: service_healthy
